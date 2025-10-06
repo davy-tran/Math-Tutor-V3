@@ -2,20 +2,33 @@
 * Title: Math Tutor V3
  * Author: Davy Tran, Brody Busch
  * Date: 2025.10.06
- * GitHub URL: https://github.com/davy-tran/MathTutorV2
- * Description: Super basic math tutor that has 4 random operators and even checks the
- * problem. Will also insult you if you're wrong for maximum teachage
+ * GitHub URL: https://github.com/davy-tran/Math-Tutor-V3
+ * Description: (will need to update)
+ * Math tutor with 3 level system with 3 attempts to go up levels. If answer is incorrect
+ * you go down a level. As you answer correctly, you go up levels, maximum 3.
+ * give user 3 attempts
+ * user goes up 10 > 20 > 30
  **************************************************************************************/
 #include <iostream> //Needed for cout and cin
-#include <cstdlib>
-#include <ctime>
+#include <cstdlib> // srand and rand operations
+#include <ctime> // needed for time seeding
+#include <string> // string data types
 using namespace std;
 
-int main() {
+int main()
+{
+    //attempts that users will get with levels
+    const int MAX_ATTEMPTS = 3;
+    const int LEVEL_CHANGE_RANGE =  10;
+
+    enum MathType {MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4};
+
+
+
     srand(time(0));
     // initializing variables
     string userName;
-    // random math opperator
+    // random math operator
     int mathType = (rand()%4+1);
     char mathChar;
     // random right and left numbers
@@ -27,12 +40,12 @@ int main() {
     int placeholder = 0;
     //math operations
     switch (mathType) {
-        case 1:
+        case MT_ADD:
             mathChar = '+';
             actualAnswer = (rightNum + leftNum);
         break;
 
-        case 2:
+        case MT_SUB:
             mathChar = '-';
         if (leftNum < rightNum) {
             placeholder = rightNum;
@@ -41,11 +54,11 @@ int main() {
         actualAnswer = (leftNum - rightNum);
         break;
 
-        case 3:
+        case MT_MUL:
             mathChar = '*';
             actualAnswer = (rightNum * leftNum);
         break;
-        case 4:
+        case MT_DIV:
             mathChar = '/';
             leftNum = rightNum*leftNum;
             actualAnswer = (leftNum/rightNum);
@@ -71,15 +84,28 @@ int main() {
     getline (cin,userName);   //Get username
     cout << "Hello, " << userName << "!" << endl;   //Greet user with name
 
+    leftNum = rand()%10+1;
+    rightNum = rand()%10+1;
+
+
+    mathType = static_cast<MathType>(rand() % 4 +1); // 1=add, 2=subtract, 3=multiply, 4=divide
+
     cout << userName << " what is " << leftNum << mathChar << rightNum << "?" << endl;
 
-    cin >> userAnswer;
+    while (!(cin >> userAnswer)) {
+        cin.clear(); //clear cin error flag
+        // include limit library to user numeric limits
+        cin.ignore(numeric_limits<streamsize>::max(),
+            '\n'); //ignore max input up to '\n'
+        cout << "\tInvalid Input!" << endl;
+        cout << "\tPlease enter a number: ";
+    } //end of get userAnswer while loop
 
     if (userAnswer==actualAnswer) {
         cout << "Great job "<< userName <<"!" << endl;
     }
     else {
-        cout <<"Ohhhh, so you're an english major";
+        cout <<"Incorrect!" << endl;
     }
 
 
