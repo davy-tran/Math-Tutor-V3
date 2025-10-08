@@ -13,6 +13,8 @@
 #include <cstdlib> // srand and rand operations
 #include <ctime> // needed for time seeding
 #include <string> // string data types
+#include <limits> //for numeric limits
+
 using namespace std;
 
 int main()
@@ -23,9 +25,6 @@ int main()
 
     enum MathType {MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4};
 
-
-
-    srand(time(0));
     // initializing variables
     string userName;
     // random math operator
@@ -38,32 +37,10 @@ int main()
     int actualAnswer;
     int userAnswer;
     int placeholder = 0;
-    //math operations
-    switch (mathType) {
-        case MT_ADD:
-            mathChar = '+';
-            actualAnswer = (rightNum + leftNum);
-        break;
 
-        case MT_SUB:
-            mathChar = '-';
-        if (leftNum < rightNum) {
-            placeholder = rightNum;
-            rightNum = leftNum;
-            leftNum = placeholder;}
-        actualAnswer = (leftNum - rightNum);
-        break;
+    srand(time(0));
 
-        case MT_MUL:
-            mathChar = '*';
-            actualAnswer = (rightNum * leftNum);
-        break;
-        case MT_DIV:
-            mathChar = '/';
-            leftNum = rightNum*leftNum;
-            actualAnswer = (leftNum/rightNum);
-        break;
-    }
+
     //math tutor display
     cout << "************************************************************" << endl;
     cout << "*                      MATH TUTOR                          *" << endl;
@@ -84,24 +61,51 @@ int main()
     getline (cin,userName);   //Get username
     cout << "Hello, " << userName << "!" << endl;   //Greet user with name
 
-    leftNum = rand()%10+1;
-    rightNum = rand()%10+1;
+    leftNum = rand() % 10 + 1;
+    rightNum = rand() % 10 + 1;
 
+    mathType = static_cast<MathType>(rand() % 4 + 1); // 1=add, 2=subtract, 3=multiply, 4=divide
 
-    mathType = static_cast<MathType>(rand() % 4 +1); // 1=add, 2=subtract, 3=multiply, 4=divide
+    //math operations
+    switch (mathType) {
+    case MT_ADD:
+        mathChar = '+';
+        actualAnswer = (rightNum + leftNum);
+        break;
+
+    case MT_SUB:
+        mathChar = '-';
+        if (leftNum < rightNum) {
+            placeholder = rightNum;
+            rightNum = leftNum;
+            leftNum = placeholder;
+        }
+        actualAnswer = (leftNum - rightNum);
+        break;
+
+    case MT_MUL:
+        mathChar = '*';
+        actualAnswer = rightNum * leftNum;
+        break;
+    case MT_DIV:
+        mathChar = '/';
+        leftNum = rightNum*leftNum;
+        actualAnswer = leftNum / rightNum;
+        break;
+    }
 
     cout << userName << " what is " << leftNum << mathChar << rightNum << "?" << endl;
 
     while (!(cin >> userAnswer)) {
         cin.clear(); //clear cin error flag
-        // include limit library to user numeric limits
+        // include limits library to user numeric limits
         cin.ignore(numeric_limits<streamsize>::max(),
             '\n'); //ignore max input up to '\n'
         cout << "\tInvalid Input!" << endl;
         cout << "\tPlease enter a number: ";
     } //end of get userAnswer while loop
 
-    if (userAnswer==actualAnswer) {
+    if (userAnswer == actualAnswer) {
         cout << "Great job "<< userName <<"!" << endl;
     }
     else {
