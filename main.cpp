@@ -14,30 +14,29 @@
 #include <ctime> // needed for time seeding
 #include <string> // string data types
 #include <limits> //for numeric limits
-
 using namespace std;
 
 int main()
 {
     //attempts that users will get with levels
     const int MAX_ATTEMPTS = 3;
-    const int LEVEL_CHANGE_RANGE =  10;
+    const int LEVEL_CHANGE_RANGE = 10;
 
-    enum MathType {MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4};
+    enum MathType { MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4 };
 
     // initializing variables
     string userName;
     // random math operator
-    int mathType = (rand()%4+1);
+    int mathType = (rand() % 4 + 1);
     char mathChar;
     // random right and left numbers
-    int rightNum = (rand()%10+1);
-    int leftNum = (rand()%10+1);
+    int rightNum = (rand() % 10 + 1);
+    int leftNum = (rand() % 10 + 1);
     // answer cin holder
     int actualAnswer;
     int userAnswer;
     int placeholder = 0;
-
+    string userInput;
     srand(time(0));
 
 
@@ -58,60 +57,91 @@ int main()
     cout << "************************************************************" << endl;
 
     cout << "What is your name? ";
-    getline (cin,userName);   //Get username
-    cout << "Hello, " << userName << "!" << endl;   //Greet user with name
+    getline(cin, userName); //Get username
+    cout << "Hello, " << userName << "!" << endl; //Greet user with name
 
-    leftNum = rand() % 10 + 1;
-    rightNum = rand() % 10 + 1;
+    do
+    {
+        leftNum = rand() % 10 + 1;
+        rightNum = rand() % 10 + 1;
 
-    mathType = static_cast<MathType>(rand() % 4 + 1); // 1=add, 2=subtract, 3=multiply, 4=divide
+        mathType = static_cast<MathType>(rand() % 4 + 1); // 1=add, 2=subtract, 3=multiply, 4=divide
 
-    //math operations
-    switch (mathType) {
-    case MT_ADD:
-        mathChar = '+';
-        actualAnswer = (rightNum + leftNum);
-        break;
+        //math operations
+        switch (mathType)
+        {
+        case MT_ADD:
+            mathChar = '+';
+            actualAnswer = (rightNum + leftNum);
+            break;
 
-    case MT_SUB:
-        mathChar = '-';
-        if (leftNum < rightNum) {
-            placeholder = rightNum;
-            rightNum = leftNum;
-            leftNum = placeholder;
+        case MT_SUB:
+            mathChar = '-';
+            if (leftNum < rightNum)
+            {
+                placeholder = rightNum;
+                rightNum = leftNum;
+                leftNum = placeholder;
+            }
+            actualAnswer = (leftNum - rightNum);
+            break;
+
+        case MT_MUL:
+            mathChar = '*';
+            actualAnswer = rightNum * leftNum;
+            break;
+        case MT_DIV:
+            mathChar = '/';
+            leftNum = rightNum * leftNum;
+            actualAnswer = leftNum / rightNum;
+            break;
         }
-        actualAnswer = (leftNum - rightNum);
-        break;
 
-    case MT_MUL:
-        mathChar = '*';
-        actualAnswer = rightNum * leftNum;
-        break;
-    case MT_DIV:
-        mathChar = '/';
-        leftNum = rightNum*leftNum;
-        actualAnswer = leftNum / rightNum;
-        break;
-    }
+        cout << userName << " what is " << leftNum << mathChar << rightNum << "?" << endl;
 
-    cout << userName << " what is " << leftNum << mathChar << rightNum << "?" << endl;
+        while (!(cin >> userAnswer))
+        {
+            cin.clear(); //clear cin error flag
+            // include limits library to user numeric limits
+            cin.ignore(numeric_limits<streamsize>::max(),
+                       '\n'); //ignore max input up to '\n'
+            cout << "\tInvalid Input!" << endl;
+            cout << "\tPlease enter a number: ";
+        } //end of get userAnswer while loop
 
-    while (!(cin >> userAnswer)) {
-        cin.clear(); //clear cin error flag
-        // include limits library to user numeric limits
-        cin.ignore(numeric_limits<streamsize>::max(),
-            '\n'); //ignore max input up to '\n'
-        cout << "\tInvalid Input!" << endl;
-        cout << "\tPlease enter a number: ";
-    } //end of get userAnswer while loop
+        if (userAnswer == actualAnswer)
+        {
+            cout << "Great job " << userName << "!" << endl;
+        }
+        else
+        {
+            cout << "Incorrect!" << endl;
+        }
 
-    if (userAnswer == actualAnswer) {
-        cout << "Great job "<< userName <<"!" << endl;
-    }
-    else {
-        cout <<"Incorrect!" << endl;
-    }
+        getline(cin, userInput); //clearing the newline from the input buffer
 
+        while (true) //clearing new line from input buffer
+        {
+            cout << "do you want to continue (y-yes | n-no)?";
+            getline(cin, userInput);
+
+            for (int i = 0; i < userInput.size(); i++)
+            {
+                userInput.at(i) = tolower(userInput.at(i));
+            }
+
+            if (userInput == "y" || userInput == "yes" ||
+                userInput == "n" || userInput == "no")
+            {
+                break;
+            }
+            else
+            {
+                cout << "Invalid input, please try again..." << endl;
+                cout << endl;
+            } //end of if (y, yes, n, no
+        } //end of while loop of yes no answer
+    } while (userInput == "yes" || userInput == "y");
 
     return 0;
-} //test
+} //test;
