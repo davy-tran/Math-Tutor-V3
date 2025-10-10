@@ -22,7 +22,7 @@ int main()
     const int MAX_ATTEMPTS = 3;
     const int LEVEL_CHANGE_RANGE = 10;
     int mathLevel = 1;
-    //counts however many right or wrong
+    //counts however many right or wrong with range of level
     int currentRange = LEVEL_CHANGE_RANGE;
     int correctCounter = 0;
     int incorrectCounter = 0;
@@ -122,9 +122,9 @@ int main()
                 correctCounter++;
                 break;
             } else {
+                incorrectCounter++;
                 if (i == MAX_ATTEMPTS) {
                     cout << "The answer was " << actualAnswer << ". Sorry " << userName << ", you are out of attempts.";
-                    incorrectCounter++;
                 } else {
                     cout << "Incorrect. " << i << " attempts remain.";
                 }
@@ -136,14 +136,16 @@ int main()
             correctCounter = 0;
             incorrectCounter= 0;
             currentRange += LEVEL_CHANGE_RANGE;
-            cout << userName << ", you leveled up!" << " You are on level " << mathLevel << endl;
-        } else if (incorrectCounter == 3) {
+            cout << userName << ", you leveled up!" << endl <<" You are now on level " << mathLevel << "." << endl;
+        } else if (incorrectCounter == 3 && mathLevel > 1) {
             mathLevel--;
             correctCounter = 0;
             incorrectCounter = 0;
             currentRange -= LEVEL_CHANGE_RANGE;
-            cout << userName << ", you have gone down a level." << " You are on level " << mathLevel << endl;
+            cout << userName << endl << ", you have gone down a level." << endl << "You are now on level " << mathLevel << "." << endl;
         }
+
+        cout << endl;
 
         getline(cin, userInput); //clearing the newline from the input buffer
 
@@ -166,9 +168,9 @@ int main()
             {
                 cout << "Invalid input, please try again..." << endl;
                 cout << endl;
-            } //end of if (y, yes, n, no
+            } //end of if (y, yes, n, no)
         } //end of while loop of yes no answer
     } while (userInput == "yes" || userInput == "y");
 
     return 0;
-} //test; esdsesdfesdfsf
+} //end of code of math tutor vro
