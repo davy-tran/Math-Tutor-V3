@@ -172,5 +172,7 @@ int main()
         } //end of while loop of yes no answer
     } while (userInput == "yes" || userInput == "y");
 
+    cout << "yoooo thanks for using the Math Tutor V3! hope to see you again when Math Tutor V4!";
+
     return 0;
 } //end of code of math tutor vro
