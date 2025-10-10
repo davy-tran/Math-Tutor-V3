@@ -1,7 +1,8 @@
-Math Tutor V3 Table of Content - Summary - Console Output Example
-[Broderick Busch, Davy Tran](#Broderick Busch, Davy Tran) ## Math tutor with the four functions, addition, subtraction, multiplication, and division. Does give a correct and incorrect output.
+# Math Tutor V3 Table of Content - [Summary](summary) - [Console Output Example](#console-output-example)
+[Broderick Busch, Davy Tran](#Broderick Busch, Davy Tran)` ## Math tutor with the four functions, addition, subtraction, multiplication and division. Does feature a levling system.
 
-Console Output Testing Example ```
+##Console Output Testing Example ```
+```
 ************************************************************
 *                      MATH TUTOR                          *
 *              MATH TUTOR      MATH TUTOR                  *
@@ -49,3 +50,4 @@ brody & dave, you have gone down a level.
 You are now on level 1.
 
  Would you like to continue (y-yes | n-no)?
+```
