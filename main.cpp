@@ -20,7 +20,12 @@ int main()
 {
     //attempts that users will get with levels
     const int MAX_ATTEMPTS = 3;
-    const int LEVEL_CHANGE_RANGE = 10;
+    const int LEVEL_CHANGE_RANGE = 0;
+    const int mathLevel = 1;
+    //counts however many right or wrong
+    const int currentRange = 0;
+    const int correctCounter = 0;
+    const int incorrectCounter = 0;
 
     enum MathType { MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4 };
 
@@ -97,7 +102,10 @@ int main()
             break;
         }
 
-        cout << userName << " what is " << leftNum << mathChar << rightNum << "?" << endl;
+        for (int i = 1; i <=MAX_ATTEMPTS; i++) {
+            cout << "[Level #" << mathLevel << "} " << userName << ", what does "
+              << leftNum << mathChar << rightNum << " = ";
+        }
 
         while (!(cin >> userAnswer))
         {
@@ -115,14 +123,14 @@ int main()
         }
         else
         {
-            cout << "Incorrect!" << endl;
+            cout << "Wrong." << endl;
         }
 
         getline(cin, userInput); //clearing the newline from the input buffer
 
         while (true) //clearing new line from input buffer
         {
-            cout << "do you want to continue (y-yes | n-no)?";
+            cout << "Would you like to continue (y-yes | n-no)?";
             getline(cin, userInput);
 
             for (int i = 0; i < userInput.size(); i++)
