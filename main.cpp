@@ -124,7 +124,7 @@ int main()
             } else {
                 incorrectCounter++;
                 if (i == MAX_ATTEMPTS) {
-                    cout << "The answer was " << actualAnswer << ". Sorry " << userName << ", you are out of attempts.";
+                    cout << "The answer was " << actualAnswer << ". Sorry " << userName << ", you are out of attempts." << endl;
                 } else {
                     cout << "Incorrect. " << i << " attempts remain.";
                 }
@@ -142,7 +142,7 @@ int main()
             correctCounter = 0;
             incorrectCounter = 0;
             currentRange -= LEVEL_CHANGE_RANGE;
-            cout << userName << endl << ", you have gone down a level." << endl << "You are now on level " << mathLevel << "." << endl;
+            cout << userName << ", you have gone down a level." << endl << "You are now on level " << mathLevel << "." << endl;
         }
 
         cout << endl;
