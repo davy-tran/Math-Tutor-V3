@@ -20,12 +20,12 @@ int main()
 {
     //attempts that users will get with levels
     const int MAX_ATTEMPTS = 3;
-    const int LEVEL_CHANGE_RANGE = 0;
-    const int mathLevel = 1;
+    const int LEVEL_CHANGE_RANGE = 10;
+    int mathLevel = 1;
     //counts however many right or wrong
-    const int currentRange = 0;
-    const int correctCounter = 0;
-    const int incorrectCounter = 0;
+    int currentRange = LEVEL_CHANGE_RANGE;
+    int correctCounter = 0;
+    int incorrectCounter = 0;
 
     enum MathType { MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4 };
 
@@ -61,14 +61,14 @@ int main()
 
     cout << "************************************************************" << endl;
 
-    cout << "What is your name? ";
+    cout << "What is your name?  ";
     getline(cin, userName); //Get username
     cout << "Hello, " << userName << "!" << endl; //Greet user with name
 
     do
     {
-        leftNum = rand() % 10 + 1;
-        rightNum = rand() % 10 + 1;
+        leftNum = rand() % currentRange + 1;
+        rightNum = rand() % currentRange + 1;
 
         mathType = static_cast<MathType>(rand() % 4 + 1); // 1=add, 2=subtract, 3=multiply, 4=divide
 
@@ -102,35 +102,54 @@ int main()
             break;
         }
 
-        for (int i = 1; i <=MAX_ATTEMPTS; i++) {
+        for (int i = 1; i <=MAX_ATTEMPTS; i++)
+        {
             cout << "[Level #" << mathLevel << "} " << userName << ", what does "
               << leftNum << mathChar << rightNum << " = ";
-        }
 
-        while (!(cin >> userAnswer))
-        {
-            cin.clear(); //clear cin error flag
-            // include limits library to user numeric limits
-            cin.ignore(numeric_limits<streamsize>::max(),
-                       '\n'); //ignore max input up to '\n'
-            cout << "\tInvalid Input!" << endl;
-            cout << "\tPlease enter a number: ";
-        } //end of get userAnswer while loop
+            while (!(cin >> userAnswer))
+            {
+                cin.clear(); //clear cin error flag
+                // include limits library to user numeric limits
+                cin.ignore(numeric_limits<streamsize>::max(),
+                           '\n'); //ignore max input up to '\n'
+                cout << "\tInvalid Input!" << endl;
+                cout << "\tPlease enter a number: ";
+            } //end of get userAnswer while loop
 
-        if (userAnswer == actualAnswer)
-        {
-            cout << "Great job " << userName << "!" << endl;
-        }
-        else
-        {
-            cout << "Wrong." << endl;
+            if (userAnswer == actualAnswer) {
+                cout << "Nice job " << userName << " that was correct!" << endl;
+                correctCounter++;
+                break;
+            } else {
+                if (i == MAX_ATTEMPTS) {
+                    cout << "The answer was " << actualAnswer << ". Sorry " << userName << ", you are out of attempts.";
+                    incorrectCounter++;
+                } else {
+                    cout << "Incorrect. " << i << " attempts remain.";
+                }
+            }
+        } //end of for loop
+
+        if (correctCounter == 3) {
+            mathLevel++;
+            correctCounter = 0;
+            incorrectCounter= 0;
+            currentRange += LEVEL_CHANGE_RANGE;
+            cout << userName << ", you leveled up!" << " You are on level " << mathLevel << endl;
+        } else if (incorrectCounter == 3) {
+            mathLevel--;
+            correctCounter = 0;
+            incorrectCounter = 0;
+            currentRange -= LEVEL_CHANGE_RANGE;
+            cout << userName << ", you have gone down a level." << " You are on level " << mathLevel << endl;
         }
 
         getline(cin, userInput); //clearing the newline from the input buffer
 
         while (true) //clearing new line from input buffer
         {
-            cout << "Would you like to continue (y-yes | n-no)?";
+            cout << " Would you like to continue (y-yes | n-no)?";
             getline(cin, userInput);
 
             for (int i = 0; i < userInput.size(); i++)
