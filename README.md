@@ -49,5 +49,6 @@ The answer was 20. Sorry brody & dave, you are out of attempts.
 brody & dave, you have gone down a level.
 You are now on level 1.
 
- Would you like to continue (y-yes | n-no)?
+ Would you like to continue (y-yes | n-no)?no
+yoooo thanks for using the Math Tutor V3! hope to see you again when Math Tutor V4!
 ```
